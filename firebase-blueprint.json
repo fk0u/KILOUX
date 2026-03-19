@@ -1,0 +1,73 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A registered user of the application.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "role", "createdAt"]
+    },
+    "BlogPost": {
+      "title": "Blog Post",
+      "description": "A blog post article.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "authorId": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "isPublished": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "content", "authorId", "isPublished", "createdAt"]
+    },
+    "TeamMember": {
+      "title": "Team Member",
+      "description": "A member of the agency team.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "bio": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["name", "role", "bio", "order"]
+    },
+    "ChatMessage": {
+      "title": "Chat Message",
+      "description": "A message in the live chat.",
+      "type": "object",
+      "properties": {
+        "text": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "isAdmin": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["text", "userId", "userName", "isAdmin", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Stores user profiles and roles."
+    },
+    "/posts/{postId}": {
+      "schema": { "$ref": "#/entities/BlogPost" },
+      "description": "Stores blog posts."
+    },
+    "/teamMembers/{memberId}": {
+      "schema": { "$ref": "#/entities/TeamMember" },
+      "description": "Stores team member profiles."
+    },
+    "/chatMessages/{messageId}": {
+      "schema": { "$ref": "#/entities/ChatMessage" },
+      "description": "Stores live chat messages."
+    }
+  }
+}
