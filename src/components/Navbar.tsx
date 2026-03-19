@@ -60,7 +60,7 @@ export const Navbar = () => {
   const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const navContainerRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const logoTextRef = useRef<HTMLSpanElement>(null);
   const langMenuRef = useRef<HTMLDivElement>(null);
   const [isLangOpen, setIsLangOpen] = useState(false);
@@ -170,10 +170,11 @@ export const Navbar = () => {
   }, [isOpen]);
 
   const handleNavHoverStart = () => {
-    gsap.to(navContainerRef.current, {
-      borderColor: "rgba(16, 185, 129, 0.4)", // accent color
-      boxShadow: "0 0 20px rgba(16, 185, 129, 0.15)",
-      scale: 1.02,
+    gsap.to(headerRef.current, {
+      borderColor: "rgba(16, 185, 129, 0.4)", // accent color glow
+      boxShadow: "0 0 25px rgba(16, 185, 129, 0.2)",
+      backgroundColor: "rgba(30, 41, 59, 0.85)", // slightly more opaque
+      scale: 1.015,
       duration: 0.4,
       ease: "power2.out"
     });
@@ -186,9 +187,10 @@ export const Navbar = () => {
   };
 
   const handleNavHoverEnd = () => {
-    gsap.to(navContainerRef.current, {
+    gsap.to(headerRef.current, {
       borderColor: "rgba(255, 255, 255, 0.1)",
       boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
+      backgroundColor: "rgba(30, 41, 59, 0.7)", // default glassmorphism bg
       scale: 1,
       duration: 0.4,
       ease: "power2.out"
@@ -204,43 +206,52 @@ export const Navbar = () => {
   return (
     <>
       {/* Desktop Top Header */}
-      <header className="hidden md:flex fixed top-0 left-0 right-0 z-50 px-10 py-6 items-center justify-between pointer-events-none">
-        <div className="flex items-center gap-2 pointer-events-auto origin-left">
-          <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center font-display font-bold text-[#0f172a] text-xl">K</div>
-          <span ref={logoTextRef} className="font-display font-bold text-2xl tracking-tighter text-slate-200 origin-left inline-block">KILOUX</span>
-        </div>
-        
-        <nav ref={navContainerRef} className="flex items-center gap-8 bg-[#1e293b]/80 backdrop-blur-md border border-white/10 px-8 py-3 rounded-full pointer-events-auto shadow-xl origin-center">
-          {navLinks.map((link) => (
-            <MagneticLink
-              key={link.href}
-              href={link.href}
-              onMouseEnter={handleNavHoverStart}
-              onMouseLeave={handleNavHoverEnd}
-              className="text-sm font-medium text-slate-300 flex items-center gap-2 group relative md:cursor-none i18n-text"
-            >
-              <span className="relative z-10">{link.name}</span>
-              <span className="absolute inset-x-0 -bottom-1 h-px bg-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
-            </MagneticLink>
-          ))}
-        </nav>
-        
-        <div className="w-32 flex justify-end pointer-events-auto relative">
-          <button 
-            onClick={() => setIsLangOpen(!isLangOpen)}
-            className="flex items-center gap-2 bg-[#1e293b]/80 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full text-sm font-medium text-slate-300 hover:text-accent hover:border-accent/50 transition-all duration-300"
-          >
-            <Globe2 size={16} />
-            <span className="uppercase">{i18n.language}</span>
-          </button>
-          
-          {/* Language Dropdown */}
+      <header className="hidden md:flex fixed top-4 inset-x-6 lg:inset-x-12 z-50 justify-center pointer-events-none">
+        <div 
+          ref={headerRef}
+          className="flex items-center justify-between w-full max-w-7xl bg-[#1e293b]/70 backdrop-blur-md border border-white/10 px-8 py-3 rounded-2xl pointer-events-auto shadow-xl origin-center transition-colors duration-500"
+        >
+          {/* Logo */}
           <div 
-            className={cn(
-              "absolute top-full mt-2 right-0 bg-[#1e293b]/90 backdrop-blur-xl border border-white/10 rounded-2xl p-2 flex flex-col gap-1 min-w-[120px] shadow-2xl transition-all duration-300 origin-top-right",
-              isLangOpen ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"
-            )}
+            className="flex items-center gap-2 cursor-pointer origin-left"
+            onMouseEnter={handleNavHoverStart}
+            onMouseLeave={handleNavHoverEnd}
           >
+            <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center font-display font-bold text-[#0f172a] text-xl">K</div>
+            <span ref={logoTextRef} className="font-display font-bold text-2xl tracking-tighter text-slate-200">KILOUX</span>
+          </div>
+          
+          <nav className="flex items-center gap-8">
+            {navLinks.map((link) => (
+              <MagneticLink
+                key={link.href}
+                href={link.href}
+                onMouseEnter={handleNavHoverStart}
+                onMouseLeave={handleNavHoverEnd}
+                className="text-sm font-medium text-slate-300 flex items-center gap-2 group relative md:cursor-none i18n-text"
+              >
+                <span className="relative z-10">{link.name}</span>
+                <span className="absolute inset-x-0 -bottom-1 h-px bg-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+              </MagneticLink>
+            ))}
+          </nav>
+          
+          <div className="w-32 flex justify-end relative">
+            <button 
+              onClick={() => setIsLangOpen(!isLangOpen)}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-accent transition-all duration-300"
+            >
+              <Globe2 size={16} />
+              <span className="uppercase">{i18n.language}</span>
+            </button>
+            
+            {/* Language Dropdown */}
+            <div 
+              className={cn(
+                "absolute top-full mt-2 right-0 bg-[#1e293b]/90 backdrop-blur-xl border border-white/10 rounded-2xl p-2 flex flex-col gap-1 min-w-[120px] shadow-2xl transition-all duration-300 origin-top-right",
+                isLangOpen ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"
+              )}
+            >
             <button 
               onClick={() => toggleLanguage('en')}
               className={cn(
@@ -262,6 +273,7 @@ export const Navbar = () => {
               {i18n.language === 'id' && <span className="w-1.5 h-1.5 rounded-full bg-accent"></span>}
             </button>
           </div>
+        </div>
         </div>
       </header>
 

@@ -15,6 +15,7 @@ import { BentoCard } from './components/BentoCard';
 import { LiveChat } from './components/LiveChat';
 import { Admin } from './pages/Admin';
 import { BlogPost } from './pages/BlogPost';
+import { About } from './pages/About';
 import { cn } from './lib/utils';
 import { db } from './firebase';
 import { collection, query, onSnapshot, orderBy } from 'firebase/firestore';
@@ -673,6 +674,7 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="/blog/:id" element={<BlogPost />} />
     </Routes>
