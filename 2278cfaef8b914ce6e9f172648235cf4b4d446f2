@@ -1,0 +1,42 @@
+src/components/Navbar.tsx
+  387c93a211ee4764 63
+  75ecfb5f091c6220 173-177,190,193,209,211-212,214,216-218,220-224,238-249,254,277
+src/pages/About.tsx
+  387c93a211ee4764 1-111
+src/App.tsx
+  75ecfb5f091c6220 677
+  387c93a211ee4764 18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "2278cfaef8b914ce6e9f172648235cf4b4d446f2",
+  "prompts": {
+    "387c93a211ee4764": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "78136cdb-4fcb-42b6-a26d-a392e77190b3",
+        "model": "copilot/gemini-3.1-pro-preview"
+      },
+      "human_author": "AG-MacMini <kou.real@outlook.com>",
+      "messages": [],
+      "total_additions": 113,
+      "total_deletions": 1,
+      "accepted_lines": 113,
+      "overriden_lines": 0
+    },
+    "75ecfb5f091c6220": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "349672de-7ebd-4c4c-8cd5-4c8fb37fdd47",
+        "model": "copilot/gemini-3.1-pro-preview"
+      },
+      "human_author": "AG-MacMini <kou.real@outlook.com>",
+      "messages": [],
+      "total_additions": 55,
+      "total_deletions": 41,
+      "accepted_lines": 34,
+      "overriden_lines": 0
+    }
+  }
+}
