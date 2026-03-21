@@ -20,6 +20,9 @@ import { cn } from './lib/utils';
 import { db } from './firebase';
 import { collection, query, onSnapshot, orderBy } from 'firebase/firestore';
 import { handleFirestoreError, OperationType } from './lib/firestore-error';
+import { Canvas } from '@react-three/fiber';
+import { Mascot } from './components/Mascot';
+import { OrbitControls, Environment } from '@react-three/drei';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -152,10 +155,22 @@ const Mascot3D = () => {
         "w-full h-full absolute inset-0 z-10 flex items-center justify-center pointer-events-auto",
         !isSplineLoaded && "opacity-0"
       )}>
-        <Spline 
-          scene="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode" 
-          onLoad={handleSplineLoad}
-        />
+        <Canvas 
+          camera={{ position: [0, 0, 5], fov: 50 }}
+          onCreated={handleSplineLoad}
+          style={{ width: '100%', height: '100%', cursor: 'grab' }}
+        >
+          <ambientLight intensity={0.5} />
+          <directionalLight position={[10, 10, 5]} intensity={1} />
+          <Environment preset="city" />
+          <Mascot />
+          <OrbitControls 
+            enableZoom={false} 
+            enablePan={false}
+            minPolarAngle={Math.PI / 2.5}
+            maxPolarAngle={Math.PI / 1.5}
+          />
+        </Canvas>
       </div>
 
       <div className="absolute bottom-6 left-6 right-6 z-30 pointer-events-none flex justify-between items-end">
